@@ -25,7 +25,9 @@ function tareaProgramada(e){
    const tarea = document.querySelector('#tweet').value
 
    if(tarea === ''){
-    mostrarError('esat vacio')
+    mostrarError('Debe agregar una tarea')
+   
+    
 
     return;
    }

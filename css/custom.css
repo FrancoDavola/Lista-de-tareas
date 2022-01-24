@@ -14,12 +14,11 @@ h1, h2 {
 }
 
 .error {
-    background-color: red;
     text-align: center;
     padding: 10px;
     text-transform: uppercase;
-    font-weight: bold;
-    max-width: 400px;
+    max-width: 342px;
     margin: 0 auto;
-    color: white;
+    border: 1px solid red;
+    border-radius: 7px;
 }
