@@ -1,11 +1,15 @@
 const formulario = document.querySelector('#formulario')
 const listaDeTareas = document.querySelector('#lista-tweets')
+const grabar = document.querySelector('#grabar')
+const grabacion = document.querySelector('#grabacion')
+const parrafoGrabando = document.querySelector('#parrafoGrabando')
 let tareas = []
 
 
 eventListener()
 
 function eventListener(){
+    grabar.addEventListener('click' , grabandoTarea)
     formulario.addEventListener('submit' , tareaProgramada)
     document.addEventListener('DOMContentLoaded' , () => {
         tareas = JSON.parse(localStorage.getItem('tareas')) || []
@@ -26,9 +30,6 @@ function tareaProgramada(e){
 
    if(tarea === ''){
     mostrarError('Debe agregar una tarea')
-   
-    
-
     return;
    }
 
@@ -101,4 +102,41 @@ function borrarTarea(id){
     crearHTML()
     
     
+}
+
+function grabandoTarea(){
+    const SpeechRecognition = webkitSpeechRecognition
+    const recognition = new SpeechRecognition()
+
+    recognition.start()
+
+     recognition.onstart = function(){
+         grabacion.classList.remove('ocultar')
+         parrafoGrabando.classList.remove('ocultar')
+        
+     }
+
+     recognition.onspeechend = function(){
+        grabacion.classList.add('ocultar')
+        parrafoGrabando.classList.add('ocultar')
+         recognition.stop()
+         
+    }
+
+    recognition.onresult = function(e){
+
+        const {transcript} = e.results[0][0] 
+
+        objTarea = {
+            id: Date.now(), 
+            tarea : transcript
+         }
+
+         tareas = [...tareas , objTarea]
+         formulario.reset() 
+         crearHTML() 
+    
+        
+         
+    }
 }
